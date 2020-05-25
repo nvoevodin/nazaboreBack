@@ -4,7 +4,23 @@ import { User } from "./models/user";
 export const resolvers = {
     Query:{
         helloWorld:()=>'hellow world',
-        getPosts:()=> Post.find(),
+        getPosts:() => 
+
+Post.find().limit(350)
+
+            // var data = {}
+            // Post.find(function (err, kittens) {
+            //     if (err) return console.error(err);
+            //     var kitt = kittens.slice(0,1);
+            //     console.log(kitt)
+            //     return kitt
+            //   })
+              
+
+            
+            
+        
+        ,
         async filterPosts(_,{ word },context){
             var word1 = word.toLowerCase();
             console.log({word: word1})

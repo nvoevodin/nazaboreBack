@@ -32,7 +32,7 @@ const server = async () => {
 
     server.applyMiddleware({app})
 
-    await mongoose.connect("mongodb+srv://stalin:Nv0ev0din!@cluster0-ifpix.mongodb.net/plagueDB?retryWrites=true&w=majority",{useNewUrlParser:true})
+    await mongoose.connect("mongodb://stalin:Nv0ev0din!@cluster0-shard-00-00-ifpix.mongodb.net:27017,cluster0-shard-00-01-ifpix.mongodb.net:27017,cluster0-shard-00-02-ifpix.mongodb.net:27017/test?ssl=true&replicaSet=Cluster0-shard-0&authSource=admin&retryWrites=true&w=majority",{useNewUrlParser:true})
 
     app.get('/', (req,res)=> res.send('hello'))
     app.listen({port:4001}, ()=>{
