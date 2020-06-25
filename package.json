@@ -1,5 +1,5 @@
 {
-  "name": "graphql-ex",
+  "name": "nazaborebackend",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -14,12 +14,11 @@
     "@babel/core": "^7.9.6",
     "@babel/node": "^7.8.7",
     "@babel/preset-env": "^7.9.6",
-    "nodemon": "^2.0.3"
+    "nodemon": "^2.0.4"
   },
   "dependencies": {
-    "apollo-server-express": "^2.13.0",
+    "apollo-server-express": "^2.13.1",
     "express": "^4.17.1",
-    "graphql": "^15.0.0",
-    "mongoose": "^5.9.13"
+    "mongoose": "^5.9.15"
   }
 }

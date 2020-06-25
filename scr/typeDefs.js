@@ -4,6 +4,7 @@ export const typeDefs = gql`
 type Query{
     helloWorld: String!
     getPosts:[Post!]!
+    countPosts:Count
     getUsers:[User!]!
     filterPosts(word:String):[Post!]!
     filterCategory(category:String):[Post!]!
@@ -19,6 +20,10 @@ type Post {
     likes: Int
     dislikes: Int
     category: String!
+}
+type Count {
+    count:Int
+
 }
 
 type User {
