@@ -4,8 +4,28 @@ import { User } from "./models/user";
 export const resolvers = {
     Query:{
         helloWorld:()=>'hellow world',
-        countPosts:()=> Post.find().count({}),
+        countPosts:()=> Post.countDocuments({}, function(err, count) {
+            if (err) { return handleError(err) } //handle possible errors
+            const count1 = count
+            console.log(count1)
+            return(count1)
+            //and do some other fancy stuff
+        }),
         getPosts:()=> Post.find().limit(350),
+        async getUser(_,{ user },context){
+            let post = await User.find({username:user})
+            console.log(post)
+
+            return post;
+            
+        },
+        getUsers:()=>{
+            let users = User.find()
+            
+
+            return users;
+            
+        },
         async filterPosts(_,{ word },context){
             var word1 = word.toLowerCase();
             console.log({word: word1})
@@ -39,7 +59,7 @@ export const resolvers = {
 
 
         async likePost(_,{ postId },context){
-            let post = await Post.findById(postId);
+            let post = await Post.findById({postId});
             
             post.likes += 1;
             
@@ -48,9 +68,19 @@ export const resolvers = {
             
         },
 
+        async addOnePost(_,{ username },context){
+            let post = await User.findOne({username});
+            console.log(post)
+            post.postCount += 1;
+            
+            await post.save()
+            return post;
+            
+        },
+
          async addPost(_,{ postId, username},context){
             
-            const user = await User.findOne({username});
+            const user = await User.findOne(username);
 
             let post = user.favorites.some(i => i.postId === postId)
 
@@ -75,6 +105,33 @@ export const resolvers = {
             },
 
 
+            async addUserWord(_,{ postId, username},context){
+            
+                const user = await User.findOne({username});
+    
+                let post = user.posts.some(i => i.postId === postId)
+    
+                console.log(post)
+    
+      
+    
+                if(post){
+    
+                } else {
+                    user.posts.push(
+                        {postId,
+                        dateAdded: new Date().toISOString()}
+                    );
+                    
+                    await user.save()
+                    return user;
+    
+                }
+    
+     
+                },
+
+
         async dislikePost(_,{ postId,},context){
             let post = await Post.findById(postId);
             
@@ -85,12 +142,12 @@ export const resolvers = {
             
         },
 
-        addUser: async(_,{username,date})=>{
+        addUser: async(_,{username,date,postCount})=>{
             const user = await User.findOne({username});
             if(user){
                 
             } else{
-                const puppy = new User({username,date});
+                const puppy = new User({username,date,postCount});
                 await puppy.save();
                 return puppy;
 
